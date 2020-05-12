@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wix</groupId>
+    <groupId>cn.topviewclub</groupId>
     <artifactId>wix-embedded-mysql-modules</artifactId>
-    <version>4.6.2-SNAPSHOT</version>
+    <version>4.6.2</version>
     <name>Wix Embedded MySql Modules aggregator</name>
     <description>Wix Embedded MySql Modules aggregator</description>
-    <url>https://github.com/wix/wix-embedded-mysql</url>
+    <url>https://github.com/TopView-Studio/wix-embedded-mysql</url>
     <packaging>pom</packaging>
 
     <modules>
@@ -23,12 +23,16 @@
             <name>Vilius Lukosius</name>
             <email>vilius@wix.com</email>
         </developer>
+        <developer>
+            <name>Albumen Kevin</name>
+            <email>jhq0812@hotmail.com</email>
+        </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:wix/wix-embedded-mysql.git</connection>
-        <developerConnection>scm:git:git@github.com:wix/wix-embedded-mysql.git</developerConnection>
-        <url>git@github.com:wix/wix-embedded-mysql.git</url>
+        <connection>scm:git:git@github.com:TopView-Studio/wix-embedded-mysql.git</connection>
+        <developerConnection>scm:git:git@github.com:TopView-Studio/wix-embedded-mysql.git</developerConnection>
+        <url>git@github.com:TopView-Studio/wix-embedded-mysql.git</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -122,7 +126,7 @@
                 <version>1.6.6</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>ossrh</serverId>
+                    <serverId>oss</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
@@ -135,22 +139,39 @@
             <id>release</id>
             <build>
                 <plugins>
+                    <!-- Source -->
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
+                        <version>3.2.1</version>
                         <executions>
                             <execution>
-                                <id>package-sources</id>
+                                <phase>package</phase>
                                 <goals>
-                                    <goal>jar</goal>
+                                    <goal>jar-no-fork</goal>
                                 </goals>
                             </execution>
                         </executions>
                     </plugin>
+                    <!-- Javadoc -->
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <configuration>
+                            <show>private</show>
+                            <nohelp>true</nohelp>
+                            <charset>UTF-8</charset>
+                            <encoding>UTF-8</encoding>
+                            <docencoding>UTF-8</docencoding>
+                            <tags>
+                                <tag>
+                                    <name>date</name>
+                                </tag>
+                            </tags>
+                        </configuration>
                         <executions>
                             <execution>
-                                <id>package-javadoc</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>jar</goal>
@@ -158,12 +179,13 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!-- GPG -->
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
+                        <version>1.6</version>
                         <executions>
                             <execution>
-                                <id>sign-artifacts</id>
                                 <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
@@ -178,11 +200,11 @@
 
     <distributionManagement>
         <repository>
-            <id>ossrh</id>
+            <id>oss</id>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
         <snapshotRepository>
-            <id>ossrh</id>
+            <id>oss</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
